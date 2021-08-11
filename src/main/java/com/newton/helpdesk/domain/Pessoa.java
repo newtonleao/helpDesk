@@ -1,21 +1,58 @@
 package com.newton.helpdesk.domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.newton.helpdesk.domain.enums.Perfil;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
-public abstract class Pessoa {
-	protected Integer id;
-	protected String nome;
-	protected String cpf;
-	protected String email;
-	protected String senha;
-	protected Set<Integer> perfis = new HashSet<>();
-	protected LocalDate dataCriacao = LocalDate.now();
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.newton.helpdesk.domain.enums.Perfil;
+import com.sun.istack.NotNull;
+
+@Entity
+public abstract class Pessoa implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	protected Integer id;
+	
+	@NotNull
+    @Size(min = 2, message = "Nome deve ter no mínimo dois caracteres")
+	protected String nome;
+	
+	@Column(unique = true)
+	protected String cpf;
+	
+	@Column(unique = true)
+	@Email
+    @NotBlank
+	protected String email;
+	
+	@NotBlank
+	protected String senha;
+	
+	@ElementCollection(fetch=FetchType.EAGER)
+	@CollectionTable(name="PERFIS")
+	protected Set<Integer> perfis = new HashSet<>();
+	
+	@JsonFormat(pattern="dd/MM/yyyy")
+	protected LocalDate dataCriacao = LocalDate.now();
+
 	public Pessoa() {
 		super();
 		addPerfis(Perfil.CLIENTE);
@@ -117,7 +154,5 @@ public abstract class Pessoa {
 			return false;
 		return true;
 	}
-	
-	
 
 }

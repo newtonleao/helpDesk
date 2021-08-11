@@ -1,4 +1,4 @@
-package com.newton.logg;
+package com.newton.helpdesk;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

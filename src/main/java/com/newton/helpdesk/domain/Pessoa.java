@@ -40,10 +40,10 @@ public abstract class Pessoa implements Serializable {
 	
 	@Column(unique = true)
 	@Email
-    @NotBlank
+    @NotBlank(message = "Informe o email")
 	protected String email;
 	
-	@NotBlank
+	@NotBlank(message = "Informe a senha")
 	protected String senha;
 	
 	@ElementCollection(fetch=FetchType.EAGER)

@@ -16,11 +16,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.newton.helpdesk.domain.enums.Perfil;
-import com.sun.istack.NotNull;
 
 @Entity
 public abstract class Pessoa implements Serializable {
@@ -36,6 +36,7 @@ public abstract class Pessoa implements Serializable {
 	protected String nome;
 	
 	@Column(unique = true)
+	@NotNull(message = "O campo CFP é requerido")
 	protected String cpf;
 	
 	@Column(unique = true)

@@ -19,6 +19,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.newton.helpdesk.domain.enums.Perfil;
 
@@ -35,6 +37,7 @@ public abstract class Pessoa implements Serializable {
     @Size(min = 2, message = "Nome deve ter no mínimo dois caracteres")
 	protected String nome;
 	
+	@CPF
 	@Column(unique = true)
 	@NotNull(message = "O campo CFP é requerido")
 	protected String cpf;
